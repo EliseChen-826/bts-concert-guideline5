@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS Concert Guideline | ARMY 演唱會生存懶人包</title>
+    <style>
+        /* --- 基礎設定 --- */
+        :root {
+            --bts-purple: #8A55F8;
+            --bts-dark-purple: #5D32A8;
+            --bg-color: #F8F9FA;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- 漢堡選單按鈕 (固定在右上角) --- */
+        .hamburger-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000; /* 確保在最上層 */
+            background-color: var(--bts-purple);
+            color: white;
+            border: none;
+            border-radius: 50%; /* 圓形按鈕 */
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .hamburger-btn:hover {
+            background-color: var(--bts-dark-purple);
+            transform: scale(1.1);
+        }
+
+        /* --- 側滑選單 (預設隱藏在螢幕右側外) --- */
+        .side-menu {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 2001;
+            top: 0;
+            right: -260px; /* 初始位置在右邊外面 */
+            background-color: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            overflow-x: hidden;
+            transition: 0.4s; /* 滑動動畫時間 */
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-menu.active {
+            right: 0; /* 啟動時滑入 */
+        }
+
+        /* 選單內的連結樣式 */
+        .side-menu a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: #555;
+            display: block;
+            transition: 0.3s;
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: bold;
+        }
+
+        .side-menu a:hover {
+            color: var(--bts-purple);
+            background-color: #f8f0ff;
+            padding-left: 40px; /* 懸停時稍微右移 */
+        }
+
+        /* 關閉按鈕 (X) */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+            margin-left: 50px;
+            color: #aaa;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .close-btn:hover { color: var(--bts-purple); }
+
+        /* --- 遮罩層 (點擊背景關閉選單) --- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: none; /* 預設隱藏 */
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* --- Header --- */
+        header {
+            background: linear-gradient(135deg, var(--bts-purple), var(--bts-dark-purple));
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+        }
+
+        header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; }
+        header p { margin-top: 10px; font-size: 1.1rem; opacity: 0.95; }
+
+        /* --- 內容區塊樣式 (保持不變) --- */
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem 3rem 1rem; }
+        section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            scroll-margin-top: 20px;
+        }
+        h2 { color: var(--bts-purple); border-bottom: 3px solid #eee; padding-bottom: 12px; margin-top: 0; }
+        h3 { color: var(--bts-dark-purple); margin-top: 2rem; border-left: 5px solid var(--bts-purple); padding-left: 10px; }
+        
+        .btn-link { display: inline-block; background: var(--bts-purple); color: white; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9rem; margin: 5px 0; }
+        .btn-outline { background: transparent; border: 2px solid var(--bts-purple); color: var(--bts-purple); }
+        .alert { background: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        
+        .checklist { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; list-style: none; padding: 0; }
+        .checklist li { background: #fdfdfd; border: 1px solid #eee; padding: 10px; border-radius: 8px; display: flex; align-items: center; }
+        .checklist input { margin-right: 10px; transform: scale(1.2); accent-color: var(--bts-purple); }
+
+        details { margin-bottom: 15px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; }
+        details summary { background: #f8f0ff; padding: 15px; cursor: pointer; font-weight: bold; list-style: none; position: relative; }
+        details summary::after { content: '+'; position: absolute; right: 20px; color: var(--bts-purple); }
+        details[open] summary::after { content: '-'; }
+        details .content { padding: 15px; background: white; border-top: 1px solid #eee; }
+
+        footer { text-align: center; padding: 2rem; background: #333; color: #aaa; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <button class="hamburger-btn" onclick="openMenu()">☰</button>
+
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <div class="side-menu" id="sideMenu">
+        <button class="close-btn" onclick="closeMenu()">&times;</button>
+        <div style="padding: 0 30px 20px 30px; font-weight: bold; color: #8A55F8; font-size: 1.2rem;">目錄</div>
+        <a href="#membership" onclick="closeMenu()">💳 會員購買</a>
+        <a href="#tickets" onclick="closeMenu()">🎫 搶票攻略</a>
+        <a href="#view" onclick="closeMenu()">🏟️ 場地視野</a>
+        <a href="#prep" onclick="closeMenu()">🎒 當天準備</a>
+    </div>
+
+    <header>
+        <h1>BTS Concert Guideline</h1>
+        <p>給 ARMY 的演唱會生存懶人包 💜</p>
+    </header>
+
+    <div class="container">
+        <section id="membership">
+            <h2>💳 Weverse 會員購買疑難雜症</h2>
+            <p>想搶票，擁有官方會員 (ARMY Membership) 是最基本的門檻！</p>
+            <h3>1. 購買流程</h3>
+            <p><a href="https://www.dcard.tw/f/bts/p/259232719" target="_blank" class="btn-link">🔗 實用 Dcard 懶人包</a></p>
+            <div class="alert"><strong>💡 小撇步：</strong> 試試用「韓元 (KRW)」結帳，通常比美元便宜！</div>
+            <ol>
+                <li>下載 <strong>Weverse Shop App</strong> 並登入。</li>
+                <li>選擇 "Global" 或對應地區購買 Membership。</li>
+                <li><strong>重要：</strong> 付款後務必去 Weverse App 公告頁面點擊<strong>「優先購票申請 (Apply)」</strong>！</li>
+            </ol>
+            
+            <h3>2. 會員常見 QA</h3>
+            <details>
+                <summary>Q1: 買會員有什麼用？</summary>
+                <div class="content"><p>享有會員優先購票權。請記住自己的會員編號 (BA開頭)，購票時需要輸入。</p></div>
+            </details>
+            <details>
+                <summary>Q2: 刷卡了但怎麼確認成功？</summary>
+                <div class="content">
+                    <p>請檢查 Weverse Shop 的「訂單紀錄 (Order History)」或 Weverse 的「我的 Membership」是否有顯示卡面。如果商品頁還能讓你買，代表上次<strong>沒成功</strong>。</p>
+                </div>
+            </details>
+            <div class="alert" style="border-left-color: #d9534f; background-color: #f9dede;">
+                <strong>⚠️ 名字絕對不能錯：</strong> First Name / Last Name 必須跟<strong>護照</strong>一模一樣，填錯非常難改。
+            </div>
+        </section>
+
+        <section id="tickets">
+            <h2>🎫 各網站搶票攻略</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <h3>🇹🇼 拓元 (台灣)</h3>
+                    <a href="https://lattekorea.com/tixcraft-ticket/" target="_blank" class="btn-link btn-outline">🔗 拓元攻略</a>
+                </div>
+                <div>
+                    <h3>🇰🇷 Interpark (韓國)</h3>
+                    <a href="https://lattekorea.com/interpark/" target="_blank" class="btn-link btn-outline">🔗 Interpark 攻略</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="view">
+            <h2>🏟️ 場地視野參考</h2>
+            <p><strong>🇹🇼 台灣可能場地：</strong></p>
+            <a href="https://www.dcard.tw/f/entertainer/p/254992235" target="_blank" class="btn-link">🔗 高雄世運主場館</a>
+            <a href="https://www.dcard.tw/f/girls_generation/p/258292919" target="_blank" class="btn-link">🔗 台北大巨蛋</a>
+        </section>
+
+        <section id="prep">
+            <h2>🎒 事前準備 ＆ 當天注意事項</h2>
+            <h3>✅ 必備物品清單</h3>
+            <div class="alert"><strong>⚠️ 注意：</strong> 站區通常不可帶後背包，建議帶側背包。</div>
+            <ul class="checklist">
+                <li><label><input type="checkbox"> 演唱會門票</label></li>
+                <li><label><input type="checkbox"> <strong>護照 / 身分證</strong> (重要!)</label></li>
+                <li><label><input type="checkbox"> 阿米棒 + 備用電池</label></li>
+                <li><label><input type="checkbox"> 行動電源</label></li>
+                <li><label><input type="checkbox"> 水、喉糖</label></li>
+                <li><label><input type="checkbox"> 小糖果 / 麵包</label></li>
+            </ul>
+        </section>
+    </div>
+
+    <footer><p>Created for ARMY 💜 Borahae<br>此網頁為粉絲自製，以官方公告為準。</p></footer>
+
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").classList.add("active");
+            document.getElementById("overlay").classList.add("active");
+        }
+
+        function closeMenu() {
+            document.getElementById("sideMenu").classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
+        }
+    </script>
+
+</body>
+</html>
