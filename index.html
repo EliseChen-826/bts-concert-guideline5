@@ -9,13 +9,14 @@
         :root {
             --bts-purple: #8A55F8;
             --bts-dark-purple: #5D32A8;
+            --highlight-color: #D63384; /* 重要物品的高亮色 (洋紅) */
             --bg-color: #F8F9FA;
             --text-color: #333;
             --card-bg: #ffffff;
         }
 
         body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
@@ -24,16 +25,16 @@
             scroll-behavior: smooth;
         }
 
-        /* --- 漢堡選單按鈕 (固定在右上角) --- */
+        /* --- 漢堡選單按鈕 --- */
         .hamburger-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 2000; /* 確保在最上層 */
+            z-index: 2000;
             background-color: var(--bts-purple);
             color: white;
             border: none;
-            border-radius: 50%; /* 圓形按鈕 */
+            border-radius: 50%;
             width: 50px;
             height: 50px;
             font-size: 24px;
@@ -50,28 +51,24 @@
             transform: scale(1.1);
         }
 
-        /* --- 側滑選單 (預設隱藏在螢幕右側外) --- */
+        /* --- 側滑選單 --- */
         .side-menu {
             height: 100%;
-            width: 250px;
+            width: 260px;
             position: fixed;
             z-index: 2001;
             top: 0;
-            right: -260px; /* 初始位置在右邊外面 */
+            right: -270px;
             background-color: white;
             box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-            overflow-x: hidden;
-            transition: 0.4s; /* 滑動動畫時間 */
+            transition: 0.4s;
             padding-top: 60px;
             display: flex;
             flex-direction: column;
         }
 
-        .side-menu.active {
-            right: 0; /* 啟動時滑入 */
-        }
+        .side-menu.active { right: 0; }
 
-        /* 選單內的連結樣式 */
         .side-menu a {
             padding: 15px 30px;
             text-decoration: none;
@@ -86,25 +83,20 @@
         .side-menu a:hover {
             color: var(--bts-purple);
             background-color: #f8f0ff;
-            padding-left: 40px; /* 懸停時稍微右移 */
+            padding-left: 40px;
         }
 
-        /* 關閉按鈕 (X) */
         .close-btn {
             position: absolute;
             top: 10px;
             right: 20px;
             font-size: 36px;
-            margin-left: 50px;
             color: #aaa;
             background: none;
             border: none;
             cursor: pointer;
         }
-        
-        .close-btn:hover { color: var(--bts-purple); }
 
-        /* --- 遮罩層 (點擊背景關閉選單) --- */
         .overlay {
             position: fixed;
             top: 0;
@@ -113,15 +105,12 @@
             height: 100%;
             background: rgba(0,0,0,0.5);
             z-index: 2000;
-            display: none; /* 預設隱藏 */
+            display: none;
             opacity: 0;
             transition: opacity 0.4s;
         }
 
-        .overlay.active {
-            display: block;
-            opacity: 1;
-        }
+        .overlay.active { display: block; opacity: 1; }
 
         /* --- Header --- */
         header {
@@ -134,7 +123,7 @@
         header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; }
         header p { margin-top: 10px; font-size: 1.1rem; opacity: 0.95; }
 
-        /* --- 內容區塊樣式 (保持不變) --- */
+        /* --- 內容區塊 --- */
         .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem 3rem 1rem; }
         section {
             background: var(--card-bg);
@@ -144,16 +133,58 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             scroll-margin-top: 20px;
         }
-        h2 { color: var(--bts-purple); border-bottom: 3px solid #eee; padding-bottom: 12px; margin-top: 0; }
+        h2 { color: var(--bts-purple); border-bottom: 3px solid #eee; padding-bottom: 12px; margin-top: 0; display: flex; align-items: center; gap: 10px; }
         h3 { color: var(--bts-dark-purple); margin-top: 2rem; border-left: 5px solid var(--bts-purple); padding-left: 10px; }
         
         .btn-link { display: inline-block; background: var(--bts-purple); color: white; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9rem; margin: 5px 0; }
         .btn-outline { background: transparent; border: 2px solid var(--bts-purple); color: var(--bts-purple); }
         .alert { background: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+
+        /* --- 升級版檢查清單樣式 --- */
+        .checklist { list-style: none; padding: 0; display: grid; gap: 12px; }
+        .checklist li {
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: 0.2s;
+        }
+        .checklist li:hover { background: #f8f8f8; border-color: #ddd; }
         
-        .checklist { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; list-style: none; padding: 0; }
-        .checklist li { background: #fdfdfd; border: 1px solid #eee; padding: 10px; border-radius: 8px; display: flex; align-items: center; }
-        .checklist input { margin-right: 10px; transform: scale(1.2); accent-color: var(--bts-purple); }
+        .checklist label {
+            display: flex;
+            align-items: flex-start; /* 讓 checkbox 對齊上方 */
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .checklist input {
+            margin-right: 15px;
+            margin-top: 5px; /* 微調 checkbox 位置 */
+            transform: scale(1.3);
+            accent-color: var(--bts-purple);
+            flex-shrink: 0; /* 防止 checkbox 被壓縮 */
+        }
+
+        .text-group { display: flex; flex-direction: column; }
+        .main-text { font-size: 1.05rem; font-weight: bold; color: #333; }
+        .sub-text { font-size: 0.85rem; color: #777; margin-top: 4px; line-height: 1.4; }
+
+        /* 重要物品樣式 */
+        .important .main-text {
+            color: var(--highlight-color);
+            font-weight: 800;
+        }
+        .important-badge {
+            display: inline-block;
+            background-color: var(--highlight-color);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
 
         details { margin-bottom: 15px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; }
         details summary { background: #f8f0ff; padding: 15px; cursor: pointer; font-weight: bold; list-style: none; position: relative; }
@@ -185,6 +216,7 @@
     </header>
 
     <div class="container">
+        
         <section id="membership">
             <h2>💳 Weverse 會員購買疑難雜症</h2>
             <p>想搶票，擁有官方會員 (ARMY Membership) 是最基本的門檻！</p>
@@ -236,17 +268,220 @@
 
         <section id="prep">
             <h2>🎒 事前準備 ＆ 當天注意事項</h2>
-            <h3>✅ 必備物品清單</h3>
-            <div class="alert"><strong>⚠️ 注意：</strong> 站區通常不可帶後背包，建議帶側背包。</div>
+            
+            <h3 style="margin-top:0;">✅ 必備物品清單</h3>
+            <div class="alert">
+                <strong>⚠️ 檢查小幫手：</strong> 紅色項目為「絕對必帶」，請務必檢查三遍！
+            </div>
+
             <ul class="checklist">
-                <li><label><input type="checkbox"> 演唱會門票</label></li>
-                <li><label><input type="checkbox"> <strong>護照 / 身分證</strong> (重要!)</label></li>
-                <li><label><input type="checkbox"> 阿米棒 + 備用電池</label></li>
-                <li><label><input type="checkbox"> 行動電源</label></li>
-                <li><label><input type="checkbox"> 水、喉糖</label></li>
-                <li><label><input type="checkbox"> 小糖果 / 麵包</label></li>
+                <li class="important">
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">演唱會門票 <span class="important-badge">必帶</span></span>
+                            <span class="sub-text">這是最重要的！出門前請再次確認門票在包包裡，也記得不要看錯演唱會日期了！</span>
+                        </div>
+                    </label>
+                </li>
+                <li class="important">
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">證件 (身分證/健保卡/護照) <span class="important-badge">必帶</span></span>
+                            <span class="sub-text">實名制核對用。若出國看演唱會，請務必攜帶<strong>護照</strong>。</span>
+                        </div>
+                    </label>
+                </li>
+                <li class="important">
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">阿米棒 <span class="important-badge">必帶</span></span>
+                            <span class="sub-text">建議攜帶三代或是特別版才有中控，也記得要檢查是否能正常發光。</span>
+                        </div>
+                    </label>
+                </li>
+
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">包包</span>
+                            <span class="sub-text">建議帶容量大的側背包。若搖滾區為站區，通常會<strong>禁止攜帶後背包</strong>入場。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">悠遊卡、交通卡</span>
+                            <span class="sub-text">散場人潮眾多，提前儲值好可以節省排隊時間。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">現金</span>
+                            <span class="sub-text">購買周邊或小吃用（上次號錫林口周邊只能現金付款，備著比較保險）。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">行動電源、充電線</span>
+                            <span class="sub-text">排隊等待時間長，手機很容易沒電，可以到捷運站租借。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">手燈電池 (4號電池 x3)</span>
+                            <span class="sub-text">通常全新的電池撐得了一場演唱會，但強烈建議多帶一組備用。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">衛生紙、濕紙巾</span>
+                            <span class="sub-text">保持清潔，擦汗或擦手都很需要。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">雨傘 / 雨衣</span>
+                            <span class="sub-text">戶外排隊或往返途中，以備不時之需，若為室外場地通常建議備著。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">生理用品 / 個人藥品</span>
+                            <span class="sub-text">衛生棉、棉條；速攻藍莓、止痛藥、眼藥水等個人必需藥品。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">水 / 喉糖</span>
+                            <span class="sub-text">水場外通常會販售，也可提前買。準備要大叫應援的 ARMY 建議一定要買喉糖！</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">小糖果、小麵包</span>
+                            <span class="sub-text">如果要看彩排的 ARMY 一定要帶點充飢，不然會在場館待非常久。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">鑰匙、手機</span>
+                            <span class="sub-text">出門前最後確認自己要回得了家！</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">會員卡</span>
+                            <span class="sub-text">通常出示手機 App 的電子會員卡就可以了，有實體卡也可以帶著備用。</span>
+                        </div>
+                    </label>
+                </li>
             </ul>
+
+            <h3 style="margin-top: 30px;">🎁 其他推薦物品 (非必備)</h3>
+            <ul class="checklist">
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">環保袋</span>
+                            <span class="sub-text">裝領取的應援物或購買的周邊。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">小風扇、扇子</span>
+                            <span class="sub-text">排隊時天氣炎熱或場內空氣悶熱時可以用</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">應援牌</span>
+                            <span class="sub-text">想跟成員互動或拍照留念可攜帶。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">手機掛繩</span>
+                            <span class="sub-text">若要拿應援牌、阿米棒就可以解放雙手，也可以避免手機掉到地上。</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                  <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">髮圈</span>
+                        </div>
+                    </label>
+                </li>
+                <li>
+                     <label>
+                        <input type="checkbox">
+                        <div class="text-group">
+                            <span class="main-text">口罩</span>
+                        </div>
+                    </label>
+                </li>
+            </ul>
+
+            <h3>📡 阿米棒配對</h3>
+            <p>基本上大型演唱會都會有<strong>中控 (Central Control)</strong>，進場後只需要將阿米棒的電源打開（推到藍牙模式或依現場指示），中控會自動控制顏色與閃爍。</p>
+
+           <h3>⏳ 演唱會當天重要日程 (TBC)</h3>
+            <p style="color: #999;">待官方公佈後更新 (領票時間、彩排時間、進場時間等)</p>
+
+            <h3>🗺️ 場館地圖 (TBC)</h3>
+            <p style="color: #999;">待官方公佈後更新 (整隊區、周邊販售區、廁所位置)</p>
+            
+            <h3>🎤 歌曲應援 (TBC)</h3>
+            <p style="color: #999;">待歌單公佈後更新</p>
         </section>
+
     </div>
 
     <footer><p>Created for ARMY 💜 Borahae<br>此網頁為粉絲自製，以官方公告為準。</p></footer>
