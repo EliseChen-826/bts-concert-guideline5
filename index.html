@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BTS Concert Guideline | ARMY 演唱會生存懶人包</title>
+    <title>BTS Concert Guidelines | ARMY 演唱會生存懶人包</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,14 +14,14 @@
         :root {
             --bts-purple: #8A55F8;
             --bts-dark-purple: #5D32A8;
-            --highlight-color: #D63384; /* 重要物品的高亮色 (洋紅) */
+            --highlight-color: #D63384; 
             --bg-color: #F8F9FA;
             --text-color: #333;
             --card-bg: #ffffff;
         }
 
         body {
-            font-family: 'Noto Sans TC', sans-serif; /* 全站統一使用思源黑體 */
+            font-family: 'Noto Sans TC', sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
@@ -30,7 +30,6 @@
             scroll-behavior: smooth;
         }
 
-        /* 標題設定 */
         h1, h2, h3, .side-menu-header {
             font-family: 'Noto Sans TC', sans-serif;
             font-weight: 700;
@@ -62,7 +61,7 @@
             transform: scale(1.1);
         }
 
-        /* --- 側滑選單 (最終樣式) --- */
+        /* --- 側滑選單 --- */
         .side-menu {
             height: 100%;
             width: 280px;
@@ -74,6 +73,11 @@
             box-shadow: -2px 0 10px rgba(0,0,0,0.1);
             transition: 0.4s;
             padding-top: 20px;
+            
+            /* 🔥 關鍵修正：給底部超大留白，解決手機擋住問題 */
+            padding-bottom: 150px; 
+            box-sizing: border-box; /* 確保 padding 算在高度內 */
+            
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -81,7 +85,6 @@
 
         .side-menu.active { right: 0; }
 
-        /* 側邊欄頂部標題 */
         .side-menu-header {
             padding: 20px 30px; 
             font-size: 1.5rem;
@@ -92,11 +95,10 @@
             letter-spacing: 1px;
         }
 
-        /* --- 大目錄樣式 --- */
         .menu-main-item {
-            padding: 15px 30px 5px 30px; /* 上寬下窄 */
+            padding: 15px 30px 5px 30px; 
             font-size: 1.2rem; 
-            font-weight: 700;  /* Bold */
+            font-weight: 700;
             color: #333;
             text-decoration: none;
             display: block;
@@ -105,13 +107,10 @@
             line-height: 1.4;
         }
         
-        .menu-main-item:hover {
-            color: var(--bts-purple);
-        }
+        .menu-main-item:hover { color: var(--bts-purple); }
 
-        /* --- 小目錄樣式 --- */
         .menu-sub-item {
-            padding: 8px 30px 8px 50px; /* 左邊縮排 */
+            padding: 8px 30px 8px 50px; 
             text-decoration: none;
             font-size: 0.95rem; 
             color: #666; 
@@ -126,12 +125,14 @@
             padding-left: 55px;
         }
 
-        /* --- 分隔線樣式 (加深顏色!) --- */
+        /* --- 🔥 分隔線 (強力修正版) --- */
         .menu-divider {
-            height: 1px;
-            background-color: #ccc; /* 深灰色 */
-            margin: 15px 20px; /* 上下留白，左右縮排 */
-            display: block; 
+            /* 不用 height，改用 border，渲染比較穩定 */
+            border-top: 1px solid #d3d3d3; /* 比較深的灰色 */
+            margin: 15px 25px; /* 上下留白，左右縮排 */
+            width: auto; /* 自動寬度 */
+            display: block;
+            min-height: 1px; /* 強制佔位 */
         }
 
         .close-btn {
@@ -145,7 +146,6 @@
             cursor: pointer;
         }
 
-        /* --- 遮罩層 --- */
         .overlay {
             position: fixed;
             top: 0;
@@ -160,9 +160,7 @@
         }
         .overlay.active { display: block; opacity: 1; }
 
-        /* --- Header (照片背景版) --- */
         header {
-            /* 記得確認圖片 header-bg.jpg 是否在資料夾內 */
             background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('header-bg.jpg');
             background-size: cover;
             background-position: center;
@@ -187,7 +185,6 @@
             font-weight: 500;
         }
 
-        /* --- 內容區塊 --- */
         .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem 3rem 1rem; }
         
         section {
@@ -209,31 +206,28 @@
             gap: 10px; 
         }
 
-        /* --- 極簡風 h3 樣式 --- */
         h3 {
             color: var(--bts-dark-purple);
             margin-top: 2.5rem;
             margin-bottom: 1rem;
-            position: relative; /* 為了定位左邊的線 */
-            padding-left: 15px; /* 左邊留空間給線 */
-            padding-bottom: 8px; /* 底部留空間給線 */
-            border-bottom: 1px solid #eee; /* 底部淺灰細線 */
+            position: relative; 
+            padding-left: 15px; 
+            padding-bottom: 8px; 
+            border-bottom: 1px solid #eee; 
             scroll-margin-top: 80px;
         }
 
-        /* 左邊的紫色裝飾短線 */
         h3::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 5px; /* 微調垂直位置 */
-            bottom: 13px; /* 微調長度 */
+            top: 5px; 
+            bottom: 13px; 
             width: 5px;
             background-color: var(--bts-purple);
             border-radius: 4px;
         }
         
-        /* 按鈕樣式 */
         .btn-link { 
             display: inline-block; 
             background: var(--bts-purple); 
@@ -255,9 +249,8 @@
             color: var(--bts-purple); 
         }
 
-        /* 淺紫色按鈕 (用於視野區) */
         .btn-lavender {
-            display: block; /* 讓它佔滿一行 */
+            display: block; 
             background-color: #E8D9FF;
             color: #5D32A8;
             padding: 12px 20px;
@@ -278,7 +271,6 @@
         .alert { background: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
         .venue-link-title { font-size: 0.85rem; opacity: 0.8; font-weight: normal; display: block; margin-top: 2px; }
 
-        /* --- 檢查清單樣式 --- */
         .checklist { list-style: none; padding: 0; display: grid; gap: 12px; }
         .checklist li {
             background: #fdfdfd;
@@ -308,7 +300,6 @@
         .main-text { font-size: 1.05rem; font-weight: bold; color: #333; }
         .sub-text { font-size: 0.85rem; color: #777; margin-top: 4px; line-height: 1.4; }
 
-        /* 重要物品樣式 */
         .important .main-text { color: var(--highlight-color); font-weight: 800; }
         .important-badge {
             display: inline-block;
@@ -333,7 +324,6 @@
 <body>
 
     <button class="hamburger-btn" onclick="openMenu()">☰</button>
-
     <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
     <div class="side-menu" id="sideMenu">
@@ -366,10 +356,13 @@
         <a href="#fanchant" class="menu-sub-item" onclick="closeMenu()">🎤 歌曲應援</a>
         <a href="#prep" class="menu-sub-item" onclick="closeMenu()">🔗 其他連結</a>
         
+        <div class="menu-divider"></div>
+        
+        <div style="height: 50px; width: 100%;"></div>
     </div>
 
     <header>
-        <h1>BTS Concert Guideline</h1>
+        <h1>BTS Concert Guidelines</h1>
         <p>給 ARMY 的演唱會生存懶人包 💜</p>
     </header>
 
@@ -383,7 +376,7 @@
                 <a href="https://www.dcard.tw/f/bts/p/259232719" target="_blank" class="btn-link">🔗 實用 Dcard 懶人包</a>
             </p>
             <div class="alert">
-                <strong>💡 小撇步：</strong> 可以使用韓元 (KRW) 結帳，通常換算下來會比美元便宜！
+                <strong>💡 小撇步：</strong> 可以嘗試使用韓元 (KRW) 結帳，通常換算下來會比美元換算便宜！
             </div>
             
             <ol>
@@ -486,7 +479,7 @@
                         <input type="checkbox">
                         <div class="text-group">
                             <span class="main-text">演唱會門票 <span class="important-badge">必帶</span></span>
-                            <span class="sub-text">這是最重要的！出門前請再次確認門票在包包裡，也記得不要看錯演唱會日期了！</span>
+                            <span class="sub-text">這是最重要的！出門前請再次確認門票在包包裡。</span>
                         </div>
                     </label>
                 </li>
@@ -532,7 +525,7 @@
                         <input type="checkbox">
                         <div class="text-group">
                             <span class="main-text">現金</span>
-                            <span class="sub-text">購買周邊或小吃用（上次號錫林口周邊只能現金付款，備著比較保險）。</span>
+                            <span class="sub-text">購買周邊或小吃用（上次號錫林口周邊只能現金付款）。</span>
                         </div>
                     </label>
                 </li>
@@ -541,7 +534,7 @@
                         <input type="checkbox">
                         <div class="text-group">
                             <span class="main-text">行動電源、充電線</span>
-                            <span class="sub-text">排隊等待時間長，手機很容易沒電，可以到捷運站租借。</span>
+                            <span class="sub-text">排隊等待時間長，手機很容易沒電。</span>
                         </div>
                     </label>
                 </li>
@@ -568,7 +561,7 @@
                         <input type="checkbox">
                         <div class="text-group">
                             <span class="main-text">雨傘 / 雨衣</span>
-                            <span class="sub-text">戶外排隊或往返途中，以備不時之需，若為室外場地通常建議備著。</span>
+                            <span class="sub-text">戶外排隊或往返途中，以備不時之需。</span>
                         </div>
                     </label>
                 </li>
