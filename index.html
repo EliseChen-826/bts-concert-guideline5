@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BTS Concert Guideline | ARMY 演唱會生存懶人包</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
     <style>
         /* --- 基礎設定 --- */
         :root {
@@ -16,13 +21,19 @@
         }
 
         body {
-            font-family: "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
+            font-family: 'Noto Sans TC', sans-serif; /* 全站統一使用思源黑體 */
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
             scroll-behavior: smooth;
+        }
+
+        /* 標題設定 */
+        h1, h2, h3, .side-menu-header {
+            font-family: 'Noto Sans TC', sans-serif;
+            font-weight: 700;
         }
 
         /* --- 漢堡選單按鈕 --- */
@@ -51,52 +62,90 @@
             transform: scale(1.1);
         }
 
-        /* --- 側滑選單 --- */
+        /* --- 側滑選單 (最終樣式) --- */
         .side-menu {
             height: 100%;
-            width: 260px;
+            width: 280px;
             position: fixed;
             z-index: 2001;
             top: 0;
-            right: -270px;
+            right: -290px;
             background-color: white;
             box-shadow: -2px 0 10px rgba(0,0,0,0.1);
             transition: 0.4s;
-            padding-top: 60px;
+            padding-top: 20px;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
 
         .side-menu.active { right: 0; }
 
-        .side-menu a {
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 1.1rem;
-            color: #555;
-            display: block;
-            transition: 0.3s;
-            border-bottom: 1px solid #f0f0f0;
-            font-weight: bold;
+        /* 側邊欄頂部標題 */
+        .side-menu-header {
+            padding: 20px 30px; 
+            font-size: 1.5rem;
+            font-weight: 700; 
+            color: var(--bts-purple); 
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
         }
 
-        .side-menu a:hover {
+        /* --- 大目錄樣式 --- */
+        .menu-main-item {
+            padding: 15px 30px 5px 30px; /* 上寬下窄 */
+            font-size: 1.2rem; 
+            font-weight: 700;  /* Bold */
+            color: #333;
+            text-decoration: none;
+            display: block;
+            margin-top: 5px;
+            transition: 0.2s;
+            line-height: 1.4;
+        }
+        
+        .menu-main-item:hover {
+            color: var(--bts-purple);
+        }
+
+        /* --- 小目錄樣式 --- */
+        .menu-sub-item {
+            padding: 8px 30px 8px 50px; /* 左邊縮排 */
+            text-decoration: none;
+            font-size: 0.95rem; 
+            color: #666; 
+            display: block;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .menu-sub-item:hover {
             color: var(--bts-purple);
             background-color: #f8f0ff;
-            padding-left: 40px;
+            padding-left: 55px;
+        }
+
+        /* --- 分隔線樣式 (加深顏色!) --- */
+        .menu-divider {
+            height: 1px;
+            background-color: #ccc; /* 深灰色 */
+            margin: 15px 20px; /* 上下留白，左右縮排 */
+            display: block; 
         }
 
         .close-btn {
             position: absolute;
-            top: 10px;
+            top: 15px;
             right: 20px;
-            font-size: 36px;
+            font-size: 30px;
             color: #aaa;
             background: none;
             border: none;
             cursor: pointer;
         }
 
+        /* --- 遮罩層 --- */
         .overlay {
             position: fixed;
             top: 0;
@@ -109,22 +158,38 @@
             opacity: 0;
             transition: opacity 0.4s;
         }
-
         .overlay.active { display: block; opacity: 1; }
 
-        /* --- Header --- */
+        /* --- Header (照片背景版) --- */
         header {
-            background: linear-gradient(135deg, var(--bts-purple), var(--bts-dark-purple));
+            /* 記得確認圖片 header-bg.jpg 是否在資料夾內 */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('header-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             color: white;
             text-align: center;
-            padding: 5rem 1rem;
+            padding: 8rem 1rem; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        header h1 { margin: 0; font-size: 2.2rem; font-weight: 800; }
-        header p { margin-top: 10px; font-size: 1.1rem; opacity: 0.95; }
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-weight: 500;
+        }
 
         /* --- 內容區塊 --- */
         .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem 3rem 1rem; }
+        
         section {
             background: var(--card-bg);
             border-radius: 16px;
@@ -133,14 +198,87 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             scroll-margin-top: 20px;
         }
-        h2 { color: var(--bts-purple); border-bottom: 3px solid #eee; padding-bottom: 12px; margin-top: 0; display: flex; align-items: center; gap: 10px; }
-        h3 { color: var(--bts-dark-purple); margin-top: 2rem; border-left: 5px solid var(--bts-purple); padding-left: 10px; }
         
-        .btn-link { display: inline-block; background: var(--bts-purple); color: white; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 0.9rem; margin: 5px 0; }
-        .btn-outline { background: transparent; border: 2px solid var(--bts-purple); color: var(--bts-purple); }
-        .alert { background: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        h2 { 
+            color: var(--bts-purple); 
+            border-bottom: 3px solid #eee; 
+            padding-bottom: 12px; 
+            margin-top: 0; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
 
-        /* --- 升級版檢查清單樣式 --- */
+        /* --- 極簡風 h3 樣式 --- */
+        h3 {
+            color: var(--bts-dark-purple);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative; /* 為了定位左邊的線 */
+            padding-left: 15px; /* 左邊留空間給線 */
+            padding-bottom: 8px; /* 底部留空間給線 */
+            border-bottom: 1px solid #eee; /* 底部淺灰細線 */
+            scroll-margin-top: 80px;
+        }
+
+        /* 左邊的紫色裝飾短線 */
+        h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px; /* 微調垂直位置 */
+            bottom: 13px; /* 微調長度 */
+            width: 5px;
+            background-color: var(--bts-purple);
+            border-radius: 4px;
+        }
+        
+        /* 按鈕樣式 */
+        .btn-link { 
+            display: inline-block; 
+            background: var(--bts-purple); 
+            color: white; 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+            margin: 5px 0; 
+            transition: 0.2s;
+        }
+        
+        .btn-link:hover { background: var(--bts-dark-purple); }
+        
+        .btn-outline { 
+            background: transparent; 
+            border: 2px solid var(--bts-purple); 
+            color: var(--bts-purple); 
+        }
+
+        /* 淺紫色按鈕 (用於視野區) */
+        .btn-lavender {
+            display: block; /* 讓它佔滿一行 */
+            background-color: #E8D9FF;
+            color: #5D32A8;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin: 10px 0;
+            transition: 0.2s;
+            text-align: left;
+        }
+
+        .btn-lavender:hover {
+            background-color: #dcc7ff;
+            transform: translateX(5px);
+        }
+
+        .alert { background: #fff3cd; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        .venue-link-title { font-size: 0.85rem; opacity: 0.8; font-weight: normal; display: block; margin-top: 2px; }
+
+        /* --- 檢查清單樣式 --- */
         .checklist { list-style: none; padding: 0; display: grid; gap: 12px; }
         .checklist li {
             background: #fdfdfd;
@@ -153,17 +291,17 @@
         
         .checklist label {
             display: flex;
-            align-items: flex-start; /* 讓 checkbox 對齊上方 */
+            align-items: flex-start;
             cursor: pointer;
             width: 100%;
         }
 
         .checklist input {
             margin-right: 15px;
-            margin-top: 5px; /* 微調 checkbox 位置 */
+            margin-top: 5px;
             transform: scale(1.3);
             accent-color: var(--bts-purple);
-            flex-shrink: 0; /* 防止 checkbox 被壓縮 */
+            flex-shrink: 0;
         }
 
         .text-group { display: flex; flex-direction: column; }
@@ -171,10 +309,7 @@
         .sub-text { font-size: 0.85rem; color: #777; margin-top: 4px; line-height: 1.4; }
 
         /* 重要物品樣式 */
-        .important .main-text {
-            color: var(--highlight-color);
-            font-weight: 800;
-        }
+        .important .main-text { color: var(--highlight-color); font-weight: 800; }
         .important-badge {
             display: inline-block;
             background-color: var(--highlight-color);
@@ -203,11 +338,34 @@
 
     <div class="side-menu" id="sideMenu">
         <button class="close-btn" onclick="closeMenu()">&times;</button>
-        <div style="padding: 0 30px 20px 30px; font-weight: bold; color: #8A55F8; font-size: 1.2rem;">目錄</div>
-        <a href="#membership" onclick="closeMenu()">💳 會員購買</a>
-        <a href="#tickets" onclick="closeMenu()">🎫 搶票攻略</a>
-        <a href="#view" onclick="closeMenu()">🏟️ 場地視野</a>
-        <a href="#prep" onclick="closeMenu()">🎒 當天準備</a>
+        <div class="side-menu-header">目錄</div>
+
+        <a href="#membership" class="menu-main-item" onclick="closeMenu()">💳 會員購買</a>
+        <a href="#membership" class="menu-sub-item" onclick="closeMenu()">🛒 購買流程</a>
+        <a href="#membership" class="menu-sub-item" onclick="closeMenu()">❓ 會員常見QA</a>
+
+        <div class="menu-divider"></div>
+
+        <a href="#tickets" class="menu-main-item" onclick="closeMenu()">🎫 搶票攻略</a>
+        <a href="#tickets" class="menu-sub-item" onclick="closeMenu()">🇹🇼 拓元 (台灣場)</a>
+        <a href="#tickets" class="menu-sub-item" onclick="closeMenu()">🇰🇷 interpark (韓國場)</a>
+
+        <div class="menu-divider"></div>
+
+        <a href="#view" class="menu-main-item" onclick="closeMenu()">🏟️ 場地視野</a>
+        <a href="#view" class="menu-sub-item" onclick="closeMenu()">🇹🇼 台灣場</a>
+        <a href="#view" class="menu-sub-item" onclick="closeMenu()">🇰🇷 韓國場</a>
+
+        <div class="menu-divider"></div>
+
+        <a href="#prep" class="menu-main-item" onclick="closeMenu()">🎒 事前準備 ＆ 當天注意事項</a>
+        <a href="#checklist" class="menu-sub-item" onclick="closeMenu()">✅ 必備物品清單</a>
+        <a href="#lightstick" class="menu-sub-item" onclick="closeMenu()">💣 阿米棒配對</a>
+        <a href="#schedule" class="menu-sub-item" onclick="closeMenu()">🗓️ 重要日程</a>
+        <a href="#map" class="menu-sub-item" onclick="closeMenu()">🗺️ 場館地圖</a>
+        <a href="#fanchant" class="menu-sub-item" onclick="closeMenu()">🎤 歌曲應援</a>
+        <a href="#prep" class="menu-sub-item" onclick="closeMenu()">🔗 其他連結</a>
+        
     </div>
 
     <header>
@@ -219,57 +377,105 @@
         
         <section id="membership">
             <h2>💳 Weverse 會員購買疑難雜症</h2>
-            <p>想搶票，擁有官方會員 (ARMY Membership) 是最基本的門檻！</p>
+            
             <h3>1. 購買流程</h3>
-            <p><a href="https://www.dcard.tw/f/bts/p/259232719" target="_blank" class="btn-link">🔗 實用 Dcard 懶人包</a></p>
-            <div class="alert"><strong>💡 小撇步：</strong> 試試用「韓元 (KRW)」結帳，通常比美元便宜！</div>
+            <p>
+                <a href="https://www.dcard.tw/f/bts/p/259232719" target="_blank" class="btn-link">🔗 實用 Dcard 懶人包</a>
+            </p>
+            <div class="alert">
+                <strong>💡 小撇步：</strong> 可以使用韓元 (KRW) 結帳，通常換算下來會比美元便宜！
+            </div>
+            
             <ol>
-                <li>下載 <strong>Weverse Shop App</strong> 並登入。</li>
-                <li>選擇 "Global" 或對應地區購買 Membership。</li>
-                <li><strong>重要：</strong> 付款後務必去 Weverse App 公告頁面點擊<strong>「優先購票申請 (Apply)」</strong>！</li>
+                <li>下載 <strong>Weverse App</strong> 並登入帳號。</li>
+                <li>進入 Shop 頁面，選擇 <strong>"BTS"</strong>。</li>
+                <li>點選右上角的 <strong>三條線選單</strong>。</li>
+                <li>點擊 <strong>"Global Membership"</strong> 分類，購買 ARMY Membership。</li>
             </ol>
+
+            <div class="alert" style="background-color: #fff3cd; color: #856404; border-left: 5px solid #ffeeba;">
+                <strong>🔥 重要：</strong> 付款完成後，記得去 Weverse App 的演唱會公告頁面進行<strong>「優先購票申請 (Apply)」</strong>！<br>
+                <span style="font-size: 0.9rem;">(演唱會前官方會公告，請務必留意申請期限)</span>
+            </div>
             
             <h3>2. 會員常見 QA</h3>
+            
             <details>
-                <summary>Q1: 買會員有什麼用？</summary>
-                <div class="content"><p>享有會員優先購票權。請記住自己的會員編號 (BA開頭)，購票時需要輸入。</p></div>
-            </details>
-            <details>
-                <summary>Q2: 刷卡了但怎麼確認成功？</summary>
+                <summary>Q1: 為什麼要買會員？有什麼用途？</summary>
                 <div class="content">
-                    <p>請檢查 Weverse Shop 的「訂單紀錄 (Order History)」或 Weverse 的「我的 Membership」是否有顯示卡面。如果商品頁還能讓你買，代表上次<strong>沒成功</strong>。</p>
+                    <p>通常官方會有會員限定售票，粉絲可以享有<strong>優先購買演唱會門票</strong>的權利，買到票的機會也會比非會員高。</p>
+                    <p>⚠️ <strong>請務必記住自己的會員編號</strong>，屆時於會員日購票時，通常需要輸入會員編號才可以進行購買。</p>
                 </div>
             </details>
-            <div class="alert" style="border-left-color: #d9534f; background-color: #f9dede;">
-                <strong>⚠️ 名字絕對不能錯：</strong> First Name / Last Name 必須跟<strong>護照</strong>一模一樣，填錯非常難改。
+
+            <details>
+                <summary>Q2: 我剛剛刷卡了，怎麼確認會員有沒有買成功？</summary>
+                <div class="content">
+                    <p>請依照以下步驟檢查：</p>
+                    <p><strong>方法一：</strong><br>
+                    1. 打開 Weverse 右下角的 [More]<br>
+                    2. 點選 [我的 Membership]<br>
+                    3. 若有出現<strong>會員卡</strong>則表示購買成功，上面會顯示您的姓名與會員編號（BA+9位數字）。</p>
+                    <hr style="border:0; border-top:1px dashed #eee; margin:10px 0;">
+                    <p><strong>方法二：</strong><br>
+                    1. 打開 BTS 的 Shop<br>
+                    2. 點擊右上角的三條線選單<br>
+                    3. 點擊 [訂單紀錄]，若有出現購買會員的訂單記錄則代表購買成功。</p>
+                </div>
+            </details>
+
+            <div class="alert" style="border-left-color: #d9534f; background-color: #f9dede; color: #a94442;">
+                <strong>⚠️ 購買會員重要提醒：</strong><br>
+                請務必輸入正確的 <strong>名 (First Name)</strong> 與 <strong>姓氏 (Last Name)</strong>！<br>
+                拼音請與<strong>「護照」</strong>完全相同最保險，這是未來核對身分最重要的依據。
             </div>
         </section>
 
         <section id="tickets">
             <h2>🎫 各網站搶票攻略</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="display: flex; flex-direction: column; gap: 20px;">
                 <div>
                     <h3>🇹🇼 拓元 (台灣)</h3>
-                    <a href="https://lattekorea.com/tixcraft-ticket/" target="_blank" class="btn-link btn-outline">🔗 拓元攻略</a>
+                    <a href="https://lattekorea.com/tixcraft-ticket/" target="_blank" class="btn-link btn-outline" style="display:block; text-align:center;">🔗 拓元攻略</a>
                 </div>
                 <div>
                     <h3>🇰🇷 Interpark (韓國)</h3>
-                    <a href="https://lattekorea.com/interpark/" target="_blank" class="btn-link btn-outline">🔗 Interpark 攻略</a>
+                    <a href="https://lattekorea.com/interpark/" target="_blank" class="btn-link btn-outline" style="display:block; text-align:center;">🔗 Interpark 攻略</a>
                 </div>
             </div>
         </section>
 
         <section id="view">
             <h2>🏟️ 場地視野參考</h2>
-            <p><strong>🇹🇼 台灣可能場地：</strong></p>
-            <a href="https://www.dcard.tw/f/entertainer/p/254992235" target="_blank" class="btn-link">🔗 高雄世運主場館</a>
-            <a href="https://www.dcard.tw/f/girls_generation/p/258292919" target="_blank" class="btn-link">🔗 台北大巨蛋</a>
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                <small>因場地資訊尚未公布，目前僅貼上可能的場地視野供參考</small>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3>🇹🇼 台灣</h3>
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <a href="https://www.dcard.tw/f/entertainer/p/254992235" target="_blank" class="btn-lavender">
+                        🏟️ 高雄世運主場館
+                        <span class="venue-link-title">#集中討論 高雄世運視野整理</span>
+                    </a>
+                    
+                    <a href="https://www.dcard.tw/f/girls_generation/p/258292919" target="_blank" class="btn-lavender">
+                        🏟️ 台北大巨蛋
+                        <span class="venue-link-title">蓋個太妍大巨蛋視野樓٩( ᐛ )</span>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h3>🇰🇷 韓國</h3>
+                <p style="color:#666; margin-left: 10px;">待公布後更新</p>
+            </div>
         </section>
 
         <section id="prep">
             <h2>🎒 事前準備 ＆ 當天注意事項</h2>
             
-            <h3 style="margin-top:0;">✅ 必備物品清單</h3>
+            <h3 id="checklist" style="margin-top:0;">✅ 必備物品清單</h3>
             <div class="alert">
                 <strong>⚠️ 檢查小幫手：</strong> 紅色項目為「絕對必帶」，請務必檢查三遍！
             </div>
@@ -452,7 +658,7 @@
                     </label>
                 </li>
                 <li>
-                  <label>
+                    <label>
                         <input type="checkbox">
                         <div class="text-group">
                             <span class="main-text">髮圈</span>
@@ -469,16 +675,16 @@
                 </li>
             </ul>
 
-            <h3>📡 阿米棒配對</h3>
-            <p>基本上大型演唱會都會有<strong>中控 (Central Control)</strong>，進場後只需要將阿米棒的電源打開（推到藍牙模式或依現場指示），中控會自動控制顏色與閃爍。</p>
+            <h3 id="lightstick">💣 阿米棒配對</h3>
+            <p>基本上大型演唱會都會有<strong>中控</strong>，進場後只需要將阿米棒的電源打開（推到藍牙模式或依現場指示），中控會自動控制顏色與閃爍。</p>
 
-           <h3>⏳ 演唱會當天重要日程 (TBC)</h3>
+            <h3 id="schedule">🗓️ 演唱會當天重要日程 (TBC)</h3>
             <p style="color: #999;">待官方公佈後更新 (領票時間、彩排時間、進場時間等)</p>
 
-            <h3>🗺️ 場館地圖 (TBC)</h3>
+            <h3 id="map">🗺️ 場館地圖 (TBC)</h3>
             <p style="color: #999;">待官方公佈後更新 (整隊區、周邊販售區、廁所位置)</p>
             
-            <h3>🎤 歌曲應援 (TBC)</h3>
+            <h3 id="fanchant">🎤 歌曲應援 (TBC)</h3>
             <p style="color: #999;">待歌單公佈後更新</p>
         </section>
 
